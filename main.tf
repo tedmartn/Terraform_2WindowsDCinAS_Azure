@@ -132,8 +132,8 @@ resource "azurerm_virtual_machine" "website" {
     }
 
     os_profile_windows_config {
-    disable_password_authentication = false
-  }
+        
+      }
 
 
 
