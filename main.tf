@@ -181,7 +181,7 @@ resource "azurerm_virtual_machine_extension" "iiswebextension" {
         "nodeName" : "iiswebhostname"
         }
     }
-  }
+
 SETTINGS
 
     tags {
