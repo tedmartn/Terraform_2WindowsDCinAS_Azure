@@ -171,11 +171,12 @@ resource "azurerm_virtual_machine_extension" "iiswebextension" {
     publisher            = "Microsoft.Powershell"
     type                 = "DSC"
     type_handler_version = "2.20"
+    depends_on = ["azurerm_virtual_machine.website"]
 
     settings = <<SETTINGS
     {
         "configuration" : {
-            "url" : "iiswebserver.ps1",
+            "url" : "compusuite\Terraform_SingleWindowsVM_Azure\iiswebserver.ps1",
             "script" : "iiswebserver.ps1",
             "function" : "Main"
         },
