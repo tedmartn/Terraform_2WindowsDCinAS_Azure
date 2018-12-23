@@ -15,7 +15,7 @@ resource "azurerm_resource_group" "test_terraform_usnc_rg" {
     location = "${var.location}"
 }
 
-# Virtual Network Resource 
+# Azure VNET Resource 
 resource "azurerm_virtual_network" "test_terraform_vnet" {
     name = "${var.virtual.network.name}"
     location = "${azurerm_resource_group.test_terraform_usnc_rg.location}"
@@ -23,7 +23,7 @@ resource "azurerm_virtual_network" "test_terraform_vnet" {
     resource_group_name = "${azurerm_resource_group.test_terraform_usnc_rg.name}"
 }
 
-# Virtual Network Subnet Resource
+# Azure VNET Subnet Resource
 resource "azurerm_subnet" "test_terraform_subnet" {
     name = "${var.prefix}subnet"
     virtual_network_name = "${azurerm_virtual_network.name}"
@@ -40,6 +40,92 @@ resource "azurerm_subnet" "test_terraform_subnet" {
 # account and finally the VM itself. Terraform handles all the dependencies 
 # automatically, and each resource is named with user-defined variables.
 
+# Azure NSG Resource, this controls inbound/outbound ACL's on the associated Network Interface
+resource "azurerm_network_security_group" "test_terraform_nsg" {
+  name = "${var.prefix}-sg"
+  location = "${var.location}"
+  resource_group_name = "${azurerm_resource_group.test_terraform_usnc_rg.name}"
+
+    security_rule {
+    name = "HTTP"
+    priority = 100
+    direction ="Inbound"
+    access = "allow"
+    protocol = "tcp"
+    source_port_range = "*"
+    destination_port_range = "80"
+    source_address_prefix = "${var.source_network}"
+    destination_address_prefix = "*"
+    }
+
+    security_rule {
+    name = "RDP"
+    priority = 101
+    direction = "Inbound"
+    access = "allow"
+    protocol = "tcp"
+    source_port_range = "*"
+    destination_port_range = "3389"
+    source_address_prefix = "${var.source_network}"
+    destination_address_prefix = "*"
+    }
+
+}
+
+
+# Network Interface Resource for the Windows VM
+resource "azurerm_network_interface" "terraform_test_windowsnic" {
+    name = "${var.prefix}terraform_test_windowsnic"
+    location = "${var.location}"
+    resource_group_name = "${azurerm_resource_group.test_terraform_usnc_rg.name}"
+    network_security_group_id ="${azurerm_network_security_group.test_terraform_nsg.id}"
+
+
+    ip_configuration {
+        name = "${var.prefix}ipconfig"
+        subnet_id = "${azurerm_subnet.test_terraform_subnet.id}"
+        private_ip_address_allocation = "Dynamic"
+        public_ip_address_id = "${azurerm_public_ip.terraform_test_pip.id}"
+    }
+}
+
+
+# Public IP Resource 
+resource "azurerm_public_ip" "terraform_test_pip" {
+    name = "${var.prefix}-ip"
+    location = "${var.location}"
+    resource_group_name = "${resource_group_name.test_terraform_usnc_rg.name}"
+    public_ip_address_allocation = "Dynamic"
+    domain_name_label = "${var.hostname}"
+}
+
+
+# Settings for our Windows Virtual Machine
+resource "azurerm_virtual_machine" "website" {
+    name = "${var.hostname}-site"
+    location = "${var.location}"
+    resource_group_name = "${azurerm_resource_group.test_terraform_usnc_rg.name}"
+    vm_size = "${var.vm_size}"
+
+    network_interface_ids = ["${azurerm_network_interface.terraform_test_windowsnic.id}"]
+    delete_os_disk_on_termination = "true"
+
+
+    storage_image_reference {
+        publish = "${var.image_publisher}"
+        offer = "${var.image_offer}"
+        sku = "${var.image_sku}"
+        version = "${var.image_version}"
+    }
+
+    
+
+
+
+
+
+
+}
 
 
 
@@ -48,6 +134,5 @@ resource "azurerm_subnet" "test_terraform_subnet" {
 
 
 
-#
 
 
