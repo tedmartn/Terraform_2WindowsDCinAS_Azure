@@ -177,7 +177,7 @@ resource "azurerm_virtual_machine_extension" "iiswebextension" {
             "script" : "dscExtension.ps1",
             "function" : "Main"
         },
-    "configurationArguments" {
+    "configurationArguments" : {
         "nodeName" : "${var.hostname}"
         }
     }
