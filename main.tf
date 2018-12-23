@@ -176,7 +176,7 @@ resource "azurerm_virtual_machine_extension" "iiswebextension" {
     settings = <<SETTINGS
     {
         "configuration" : {
-            "url" : "Terraform_SingleWindowsVM_Azure\iiswebserver.ps1",
+            "url" : "compusuite/Terraform_SingleWindowsVM_Azure/iiswebserver.ps1",
             "script" : "iiswebserver.ps1",
             "function" : "Main"
         },
