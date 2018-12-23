@@ -13,6 +13,10 @@
 resource "azurerm_resource_group" "test_terraform_usnc_rg" {
     name = "${var.resource_group}"
     location = "${var.location}"
+
+    tags {
+        environment = "Terraform Test"
+    }
 }
 
 # Azure VNET Resource 
@@ -21,6 +25,10 @@ resource "azurerm_virtual_network" "vnet" {
     location = "${azurerm_resource_group.test_terraform_usnc_rg.location}"
     address_space = ["${var.address_space}"]
     resource_group_name = "${azurerm_resource_group.test_terraform_usnc_rg.name}"
+
+    tags {
+        environment = "Terraform Test"
+    }
 }
 
 # Azure VNET Subnet Resource
@@ -28,7 +36,11 @@ resource "azurerm_subnet" "subnet" {
     name = "${var.prefix}subnet"
     virtual_network_name = "${azurerm_virtual_network.vnet.name}"
     resource_group_name = "${azurerm_resource_group.test_terraform_usnc_rg.name}"
-    address_prefix = "${var.subnet_prefix}"   
+    address_prefix = "${var.subnet_prefix}"  
+
+    tags {
+        environment = "Terraform Test"
+    } 
 }
 
 ##############################################################################
@@ -70,6 +82,9 @@ resource "azurerm_network_security_group" "test_terraform_nsg" {
     destination_address_prefix = "*"
     }
 
+    tags {
+        environment = "Terraform Test"
+    }
 }
 
 
@@ -87,6 +102,10 @@ resource "azurerm_network_interface" "terraform_test_windowsnic" {
         private_ip_address_allocation = "Dynamic"
         public_ip_address_id = "${azurerm_public_ip.terraform_test_pip.id}"
     }
+
+    tags {
+        environment = "Terraform Test"
+    }
 }
 
 
@@ -97,6 +116,10 @@ resource "azurerm_public_ip" "terraform_test_pip" {
     resource_group_name = "${azurerm_resource_group.test_terraform_usnc_rg.name}"
     public_ip_address_allocation = "Dynamic"
     domain_name_label = "${var.hostname}"
+
+    tags {
+        environment = "Terraform Test"
+    }
 }
 
 
@@ -135,7 +158,9 @@ resource "azurerm_virtual_machine" "website" {
         
       }
 
-
+    tags {
+        environment = "Terraform Test"
+    }
 
 }
 
