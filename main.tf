@@ -173,9 +173,9 @@ resource "azurerm_virtual_machine_extension" "iiswebextension" {
     settings = <<SETTINGS
     {
         "configuration" {
-            "url" = "files/iiswebserver.ps1"
-            "script" = "dscExtension.ps1"
-            "function" = "Main"
+            "url" : "files/iiswebserver.ps1"
+            "script" : "dscExtension.ps1"
+            "function" : "Main"
         }
     "configurationArguments" {
         "nodeName" : "${var.hostname}"
