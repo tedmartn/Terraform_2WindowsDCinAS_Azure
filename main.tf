@@ -176,7 +176,7 @@ resource "azurerm_virtual_machine_extension" "iiswebextension" {
     {
         "configuration" : {
             "url" : "iiswebserver.ps1",
-            "script" : "dscExtension.ps1",
+            "script" : "iiswebserver.ps1",
             "function" : "Main"
         },
     "configurationArguments" : {
