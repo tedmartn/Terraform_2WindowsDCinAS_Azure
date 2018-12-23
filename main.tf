@@ -118,12 +118,18 @@ resource "azurerm_virtual_machine" "website" {
         version = "${var.image_version}"
     }
 
-    
+    storage_os_disk {
+        name = "${var.hostname}-osdisk"
+        managed_disk_type = "Standard_LRS"
+        caching = "ReadWrite"
+        create_option = "FromImage"
+    }
 
-
-
-
-
+    os_profile {
+        computer_name = "${var.hostname}"
+        admin_username = "${var.admin_username}"
+        admin_password = "${var.admin_password}"
+    }
 
 }
 
