@@ -11,13 +11,13 @@
 
 # Resource Group Resource
 resource "azurerm_resource_group" "test_terraform_usnc_rg" {
-    name = "${var.resource.group}"
+    name = "${var.resource_group}"
     location = "${var.location}"
 }
 
 # Azure VNET Resource 
 resource "azurerm_virtual_network" "test_terraform_vnet" {
-    name = "${var.virtual.network.name}"
+    name = "${var.virtual_network_name}"
     location = "${azurerm_resource_group.test_terraform_usnc_rg.location}"
     address_space = "$[var.address_space]"
     resource_group_name = "${azurerm_resource_group.test_terraform_usnc_rg.name}"
