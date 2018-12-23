@@ -37,10 +37,7 @@ resource "azurerm_subnet" "subnet" {
     virtual_network_name = "${azurerm_virtual_network.vnet.name}"
     resource_group_name = "${azurerm_resource_group.test_terraform_usnc_rg.name}"
     address_prefix = "${var.subnet_prefix}"  
-
-    tags {
-        environment = "Terraform Test"
-    } 
+    
 }
 
 ##############################################################################
