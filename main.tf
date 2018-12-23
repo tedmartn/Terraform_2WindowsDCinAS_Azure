@@ -112,7 +112,7 @@ resource "azurerm_virtual_machine" "website" {
 
 
     storage_image_reference {
-        publish = "${var.image_publisher}"
+        publisher = "${var.image_publisher}"
         offer = "${var.image_offer}"
         sku = "${var.image_sku}"
         version = "${var.image_version}"
