@@ -131,6 +131,12 @@ resource "azurerm_virtual_machine" "website" {
         admin_password = "${var.admin_password}"
     }
 
+    os_profile_windows_config {
+    disable_password_authentication = false
+  }
+
+
+
 }
 
 
