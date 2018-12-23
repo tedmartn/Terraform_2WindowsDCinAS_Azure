@@ -178,7 +178,7 @@ resource "azurerm_virtual_machine_extension" "iiswebextension" {
             "function" = "Main"
     },
     "configurationArguments" {
-        "nodeName" : "${var.hostname}"
+        "nodeName" : "iiswebhostname"
         }
     }
   }
