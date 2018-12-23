@@ -90,6 +90,10 @@ variable "source_network" {
     default = "*"
 }
 
+variable "vm_extension" {
+    description = "Name of VM Extension used to apply IIS Web Server Settings"
+    default = "iiswebextension"
+}
 
 
 
