@@ -152,9 +152,11 @@ resource "azurerm_virtual_machine" "website" {
     }
 
     os_profile_windows_config {
-        
-      }
+        provision_vm_agent = "true"
+        enable_automatic_upgrades = "true"
+        timezone = "(UTC-06:00) Central Time (US & Canada)"
 
+    }
     tags {
         environment = "Terraform Test"
     }
