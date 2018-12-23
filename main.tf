@@ -176,12 +176,11 @@ resource "azurerm_virtual_machine_extension" "iiswebextension" {
             "url" = "files/iiswebserver.ps1"
             "script" = "dscExtension.ps1"
             "function" = "Main"
-        },
+        }
     "configurationArguments" {
         "nodeName" : "${var.hostname}"
         }
     }
-}
 SETTINGS
 
     tags {
