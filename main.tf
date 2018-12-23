@@ -168,7 +168,7 @@ resource "azurerm_virtual_machine_extension" "iiswebextension" {
     name = "${var.vm_extension}"
     location = "${var.location}"
     resource_group_name = "${azurerm_resource_group.test_terraform_usnc_rg.name}"
-    virtual_machine_name = "${azurerm_virtual_machine.hostname-site.name}"
+    virtual_machine_name = "${azurerm_virtual_machine.name}"
     publisher            = "Microsoft.Powershell"
     type                 = "DSC"
     type_handler_version = "2.20"
