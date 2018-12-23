@@ -17,7 +17,7 @@ variable "prefix" {
 
 variable "hostname" {
     description = "This is the name of your virtual machine"
-    default = "usnc-terraform-testvm"
+    default = "usnc-tf-wintest"
 }
 
 variable "location" {
