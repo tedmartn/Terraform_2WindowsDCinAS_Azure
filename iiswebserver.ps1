@@ -1,12 +1,13 @@
-#Install the IIS Role
-WindowsFeature IIS
-{
-Ensure = “Present”
-Name = “Web-Server”
-}
-#Install ASP.NET 4.5
-WindowsFeature ASP
-{
-Ensure = “Present”
-Name = “Web-Asp-Net45”
+Configuration Webserver {
+
+    # The Node statement specifies which targets this configuration will be applied to.
+    Nodename "localhost" {
+
+        # The first resource block ensures that the Web-Server (IIS) feature is enabled.
+        WindowsFeature WebServer {
+            Ensure = "Present"
+            Name   = "Web-Server"
+        }
+
+    }
 }
