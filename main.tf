@@ -177,7 +177,7 @@ resource "azurerm_virtual_machine_extension" "iiswebextension" {
     {
         "configuration" : {
             "url" : "https://usnctestps1sa.blob.core.windows.net/iiswebserver/iiswebservers.zip",
-            "script" : "iiswebservers.ps1",
+            "script" : "iiswebserver.ps1",
             "function" : "Webserver"
         }
     }
