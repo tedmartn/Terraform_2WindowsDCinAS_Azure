@@ -2,6 +2,7 @@
 
 Creating a Windows Server 2016 VM using Terraform, will append a Powershell DSC extension the machine using a zip file on a public azure storage account.
 
+
 ## Getting Started
 
 Install Terraform, clone this repo to a local directory or run TF from AZ CLI directly. 
