@@ -77,12 +77,12 @@ variable "image_version" {
 
 variable "admin_username" {
     description = "Name of the username account"
-    default = ""
+    default = "testuser"
 }
 
 variable "admin_password" {
     description = "Password for Admin Account"
-    default = ""
+    default = "Password1"
 }
 
 variable "source_network" {
