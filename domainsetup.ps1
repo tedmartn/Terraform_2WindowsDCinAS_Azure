@@ -1,4 +1,4 @@
-Configuration Webserver {
+Configuration DomainController {
 
     # The Node statement specifies which targets this configuration will be applied to.
     Node "localhost" {

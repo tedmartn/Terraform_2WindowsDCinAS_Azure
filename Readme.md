@@ -1,6 +1,6 @@
 # Project Title
 
-Creating a Windows Server 2016 VM using Terraform, will append a Powershell DSC extension the machine using a zip file on a public azure storage account.
+Creating two Windows Server 2016 VM's using Terraform, will append a Powershell DSC extension that will do additional configuration. By utilzing your zip file available on a public azure storage account.
 
 
 ## Getting Started

@@ -6,11 +6,19 @@
 # This will create a Resource group with a virtual network and subnet
 # Along with a Windows Server Running IIS.
 # All Variables are pulled from Variables.tf
+# Goals for this Configuration Below 
+# Set-up Two Domain Controllers for domain availability redundancy 
+# Add both of these DC's in an Availability Set for highest SLA 99.95%
+# 
+#
+#
+#
+
 
 
 
 # Resource Group Resource
-resource "azurerm_resource_group" "test_terraform_usnc_rg" {
+resource "azurerm_resource_group" "usnc_domainsetup_rg" {
     name = "${var.resource_group}"
     location = "${var.location}"
 
@@ -22,9 +30,9 @@ resource "azurerm_resource_group" "test_terraform_usnc_rg" {
 # Azure VNET Resource 
 resource "azurerm_virtual_network" "vnet" {
     name = "${var.virtual_network_name}"
-    location = "${azurerm_resource_group.test_terraform_usnc_rg.location}"
+    location = "${azurerm_resource_group.usnc_domainsetup_rg.location}"
     address_space = ["${var.address_space}"]
-    resource_group_name = "${azurerm_resource_group.test_terraform_usnc_rg.name}"
+    resource_group_name = "${azurerm_resource_group.usnc_domainsetup_rg.name}"
 
     tags {
         environment = "Terraform Test"
@@ -35,7 +43,7 @@ resource "azurerm_virtual_network" "vnet" {
 resource "azurerm_subnet" "subnet" {
     name = "${var.prefix}subnet"
     virtual_network_name = "${azurerm_virtual_network.vnet.name}"
-    resource_group_name = "${azurerm_resource_group.test_terraform_usnc_rg.name}"
+    resource_group_name = "${azurerm_resource_group.usnc_domainsetup_rg.name}"
     address_prefix = "${var.subnet_prefix}"  
     
 }
@@ -53,7 +61,7 @@ resource "azurerm_subnet" "subnet" {
 resource "azurerm_network_security_group" "test_terraform_nsg" {
   name = "${var.prefix}-sg"
   location = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.test_terraform_usnc_rg.name}"
+  resource_group_name = "${azurerm_resource_group.usnc_domainsetup_rg.name}"
 
     security_rule {
     name = "HTTP"
@@ -89,7 +97,7 @@ resource "azurerm_network_security_group" "test_terraform_nsg" {
 resource "azurerm_network_interface" "terraform_test_windowsnic" {
     name = "${var.prefix}terraform_test_windowsnic"
     location = "${var.location}"
-    resource_group_name = "${azurerm_resource_group.test_terraform_usnc_rg.name}"
+    resource_group_name = "${azurerm_resource_group.usnc_domainsetup_rg.name}"
     network_security_group_id ="${azurerm_network_security_group.test_terraform_nsg.id}"
 
 
@@ -110,7 +118,7 @@ resource "azurerm_network_interface" "terraform_test_windowsnic" {
 resource "azurerm_public_ip" "terraform_test_pip" {
     name = "${var.prefix}-ip"
     location = "${var.location}"
-    resource_group_name = "${azurerm_resource_group.test_terraform_usnc_rg.name}"
+    resource_group_name = "${azurerm_resource_group.usnc_domainsetup_rg.name}"
     public_ip_address_allocation = "Dynamic"
     domain_name_label = "${var.hostname}"
 
@@ -124,7 +132,7 @@ resource "azurerm_public_ip" "terraform_test_pip" {
 resource "azurerm_virtual_machine" "website" {
     name = "${var.hostname}-site"
     location = "${var.location}"
-    resource_group_name = "${azurerm_resource_group.test_terraform_usnc_rg.name}"
+    resource_group_name = "${azurerm_resource_group.usnc_domainsetup_rg.name}"
     vm_size = "${var.vm_size}"
 
     network_interface_ids = ["${azurerm_network_interface.terraform_test_windowsnic.id}"]
@@ -166,7 +174,7 @@ resource "azurerm_virtual_machine" "website" {
 resource "azurerm_virtual_machine_extension" "iiswebextension" {
     name = "${var.vm_extension}"
     location = "${var.location}"
-    resource_group_name = "${azurerm_resource_group.test_terraform_usnc_rg.name}"
+    resource_group_name = "${azurerm_resource_group.usnc_domainsetup_rg.name}"
     virtual_machine_name = "${azurerm_virtual_machine.website.name}"
     publisher            = "Microsoft.Powershell"
     type                 = "DSC"
