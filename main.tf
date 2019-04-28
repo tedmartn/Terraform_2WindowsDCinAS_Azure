@@ -9,7 +9,7 @@
 # Goals for this Configuration Below 
 # Set-up Two Domain Controllers for domain availability redundancy 
 # Add both of these DC's in an Availability Set for highest SLA 99.95%
-# 
+#
 #
 #
 #
@@ -23,7 +23,7 @@ resource "azurerm_resource_group" "usnc_domainsetup_rg" {
     location = "${var.location}"
 
     tags {
-        environment = "Terraform Test"
+        environment = "Terraform Domain Set-up"
     }
 }
 
@@ -35,7 +35,7 @@ resource "azurerm_virtual_network" "vnet" {
     resource_group_name = "${azurerm_resource_group.usnc_domainsetup_rg.name}"
 
     tags {
-        environment = "Terraform Test"
+        environment = "Terraform Domain Set-up"
     }
 }
 
@@ -88,7 +88,7 @@ resource "azurerm_network_security_group" "test_terraform_nsg" {
     }
 
     tags {
-        environment = "Terraform Test"
+        environment = "Terraform Domain Set-up"
     }
 }
 
@@ -109,7 +109,7 @@ resource "azurerm_network_interface" "terraform_test_windowsnic" {
     }
 
     tags {
-        environment = "Terraform Test"
+        environment = "Terraform Domain Set-up"
     }
 }
 
@@ -123,7 +123,7 @@ resource "azurerm_public_ip" "terraform_test_pip" {
     domain_name_label = "${var.hostname}"
 
     tags {
-        environment = "Terraform Test"
+        environment = "Terraform Domain Set-up"
     }
 }
 
@@ -166,7 +166,7 @@ resource "azurerm_virtual_machine" "website" {
 
     }
     tags {
-        environment = "Terraform Test"
+        environment = "Terraform Domain Set-up"
     }
 }
 
@@ -192,7 +192,7 @@ resource "azurerm_virtual_machine_extension" "iiswebextension" {
 SETTINGS
 
     tags {
-        environment = "Terraform Test"
+        environment = "Terraform Domain Set-up"
     }
 
 }
