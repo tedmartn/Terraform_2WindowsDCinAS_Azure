@@ -15,10 +15,16 @@ variable "prefix" {
     default = "tfguide"
 }
 
-variable "hostname" {
-    description = "This is the name of your virtual machine"
-    default = "usnc-tf-wintest"
+variable "domainController1" {
+    description = "This is the name of your first domain controller"
+    default = "usnc-tf-dc1"
 }
+
+variable "domainController2" {
+    description = "This is the name of your second domain controller"
+    default = "usnc-tf-dc2"
+}
+
 
 variable "location" {
     description = "The region your resources will be created"
@@ -27,11 +33,11 @@ variable "location" {
 
 variable "virtual_network_name" {
     description = "The name of your virtual network"
-    default = "terraform_vnet"
+    default = "usnc_domain_vnet"
 }
 
 variable "address_space" {
-    description = "Top level Networking Scheme"
+    description = "Top level Networking Scheme CIDR"
     default = "10.0.0.0/16"
 }
 
@@ -87,13 +93,14 @@ variable "admin_password" {
 
 variable "source_network" {
     description = "Allow access from this network prefix, defaults at '*'."
-    default = "*"
+    default = "173.24.111.189"
 }
 
 variable "vm_extension" {
     description = "Name of VM Extension used to apply IIS Web Server Settings"
-    default = "iiswebextension"
+    default = "domainextension"
 }
+
 
 
 
